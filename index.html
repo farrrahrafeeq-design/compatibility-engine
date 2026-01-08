@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Compatibility Engine</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+    button { margin: 10px; padding: 10px 20px; }
+  </style>
+</head>
+<body>
+
+<h2 id="question"></h2>
+<button onclick="answer(0)"></button>
+<button onclick="answer(1)"></button>
+
+<script>
+const questions = [
+  { q: "One word:", a: ["clarity", "possibility"] },
+  { q: "During conflict you tend to:", a: ["withdraw", "engage"] },
+  { q: "Repetition feels:", a: ["soothing", "draining"] },
+  { q: "Truth should be:", a: ["gentle", "exact"] },
+  { q: "I accept accuracy over choice:", a: ["yes", "no"] }
+];
+
+let index = 0;
+let responses = [];
+
+function load() {
+  document.getElementById("question").innerText = questions[index].q;
+  document.querySelectorAll("button")[0].innerText = questions[index].a[0];
+  document.querySelectorAll("button")[1].innerText = questions[index].a[1];
+}
+
+function answer(choice) {
+  responses.push(choice);
+  index++;
+  if (index < questions.length) load();
+  else {
+    document.body.innerHTML = "<h2>Responses saved.</h2><p>Matching will occur later.</p>";
+    console.log(responses);
+  }
+}
+
+load();
+</script>
+
+</body>
+</html>
