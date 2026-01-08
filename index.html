@@ -16,11 +16,75 @@
 
 <script>
 const questions = [
+  // Cognitive Style
   { q: "One word:", a: ["clarity", "possibility"] },
+  { q: "You trust:", a: ["patterns", "exceptions"] },
+  { q: "You think best by:", a: ["structuring", "wandering"] },
+  { q: "You prefer ideas that are:", a: ["precise", "expansive"] },
+  { q: "Ambiguity feels:", a: ["uncomfortable", "interesting"] },
+
+  // Emotional Regulation
   { q: "During conflict you tend to:", a: ["withdraw", "engage"] },
+  { q: "Strong emotions feel:", a: ["informative", "disruptive"] },
+  { q: "You calm down by:", a: ["thinking", "doing"] },
+  { q: "After hurting someone you prefer to:", a: ["repair immediately", "wait"] },
+  { q: "Silence feels:", a: ["comfortable", "heavy"] },
+
+  // Attachment Signals (no therapy words)
+  { q: "Independence feels:", a: ["essential", "optional"] },
+  { q: "Being needed feels:", a: ["comforting", "suffocating"] },
+  { q: "You recharge best:", a: ["alone", "together"] },
+  { q: "Consistency feels:", a: ["safe", "boring"] },
+  { q: "Distance creates:", a: ["longing", "relief"] },
+
+  // Curiosity & Boredom
   { q: "Repetition feels:", a: ["soothing", "draining"] },
+  { q: "You seek novelty in:", a: ["ideas", "experiences"] },
+  { q: "Free time is best spent:", a: ["exploring", "refining"] },
+  { q: "You fear boredom more than:", a: ["failure", "uncertainty"] },
+  { q: "You abandon projects mostly due to:", a: ["loss of interest", "external limits"] },
+
+  // Ethics & Values
+  { q: "Fairness means:", a: ["equal rules", "contextual judgment"] },
   { q: "Truth should be:", a: ["gentle", "exact"] },
-  { q: "I accept accuracy over choice:", a: ["yes", "no"] }
+  { q: "Promises are:", a: ["binding", "situational"] },
+  { q: "Rules exist to be:", a: ["followed", "questioned"] },
+  { q: "Loyalty matters most when:", a: ["tested", "unnoticed"] },
+
+  // Conflict Philosophy
+  { q: "Arguments are:", a: ["necessary", "avoidable"] },
+  { q: "You respect people who are:", a: ["direct", "considerate"] },
+  { q: "Anger is best:", a: ["expressed", "contained"] },
+  { q: "You forgive:", a: ["slowly", "quickly"] },
+  { q: "Winning matters less than:", a: ["understanding", "resolution"] },
+
+  // Time Orientation
+  { q: "You think more about:", a: ["past", "future"] },
+  { q: "Planning feels:", a: ["freeing", "limiting"] },
+  { q: "Life feels more like:", a: ["a project", "a process"] },
+  { q: "You fear regret from:", a: ["action", "inaction"] },
+  { q: "Routines should be:", a: ["stable", "flexible"] },
+
+  // Social & Intimacy Signals
+  { q: "You bond through:", a: ["conversation", "shared activity"] },
+  { q: "Attention feels:", a: ["neutral", "heavy"] },
+  { q: "You share personal thoughts:", a: ["selectively", "freely"] },
+  { q: "Vulnerability feels:", a: ["strength", "exposure"] },
+  { q: "You feel closest when someone:", a: ["understands you", "chooses you"] },
+
+  // Meta / Consistency Checks
+  { q: "One word:", a: ["predictable", "unfinished"] },
+  { q: "One word:", a: ["intense", "steady"] },
+  { q: "You dislike being:", a: ["misunderstood", "constrained"] },
+  { q: "You trust intuition:", a: ["often", "cautiously"] },
+  { q: "Change should be:", a: ["intentional", "organic"] },
+
+  // Willingness Filter (crucial)
+  { q: "I am open to trusting an algorithm over instinct:", a: ["yes", "no"] },
+  { q: "I accept that attraction may grow slowly:", a: ["yes", "no"] },
+  { q: "I prefer accuracy over choice:", a: ["yes", "no"] },
+  { q: "I am willing to know one person deeply:", a: ["yes", "no"] },
+  { q: "Mismatch is not personal failure:", a: ["yes", "no"] }
 ];
 
 let index = 0;
