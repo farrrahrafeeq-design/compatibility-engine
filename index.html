@@ -4,109 +4,130 @@
   <meta charset="UTF-8">
   <title>Compatibility Engine</title>
   <style>
-    body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; }
-    button { margin: 10px; padding: 10px 20px; }
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    .option {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+    }
   </style>
 </head>
 <body>
 
 <h2 id="question"></h2>
-<button onclick="answer(0)"></button>
-<button onclick="answer(1)"></button>
+<div id="options"></div>
 
 <script>
 const questions = [
-  // Cognitive Style
-  { q: "One word:", a: ["clarity", "possibility"] },
-  { q: "You trust:", a: ["patterns", "exceptions"] },
-  { q: "You think best by:", a: ["structuring", "wandering"] },
-  { q: "You prefer ideas that are:", a: ["precise", "expansive"] },
-  { q: "Ambiguity feels:", a: ["uncomfortable", "interesting"] },
+  // A. Identity through taste
+  { type: "text", q: "List up to 5 favourite movies (comma separated):" },
+  { type: "text", q: "List up to 5 favourite series (comma separated):" },
+  { type: "mcq", q: "What matters more to you in stories?", a: ["Characters", "Plot", "Ideas", "Emotion"] },
+  { type: "mcq", q: "Music you return to most often:", a: ["Lyrics", "Melody", "Mood", "Energy"] },
+  { type: "mcq", q: "You prefer:", a: ["Rewatching favourites", "Finding new things"] },
 
-  // Emotional Regulation
-  { q: "During conflict you tend to:", a: ["withdraw", "engage"] },
-  { q: "Strong emotions feel:", a: ["informative", "disruptive"] },
-  { q: "You calm down by:", a: ["thinking", "doing"] },
-  { q: "After hurting someone you prefer to:", a: ["repair immediately", "wait"] },
-  { q: "Silence feels:", a: ["comfortable", "heavy"] },
+  // B. How you live
+  { type: "mcq", q: "Your ideal weekend looks like:", a: ["Quiet & slow", "Planned & active", "Mixed"] },
+  { type: "mcq", q: "You recharge best by:", a: ["Being alone", "With one person", "In a group"] },
+  { type: "mcq", q: "Your personal space is usually:", a: ["Organized", "Lived-in", "Chaotic"] },
+  { type: "mcq", q: "You prefer conversations that are:", a: ["Deep", "Light", "Situational"] },
+  { type: "mcq", q: "Free time feels best when it is:", a: ["Unstructured", "Loosely planned", "Structured"] },
 
-  // Attachment Signals (no therapy words)
-  { q: "Independence feels:", a: ["essential", "optional"] },
-  { q: "Being needed feels:", a: ["comforting", "suffocating"] },
-  { q: "You recharge best:", a: ["alone", "together"] },
-  { q: "Consistency feels:", a: ["safe", "boring"] },
-  { q: "Distance creates:", a: ["longing", "relief"] },
+  // C. Emotional & relational style
+  { type: "mcq", q: "During conflict, you usually:", a: ["Withdraw", "Engage immediately", "Need time then talk"] },
+  { type: "mcq", q: "When upset, you want your partner to:", a: ["Give space", "Check in", "Act normally"] },
+  { type: "mcq", q: "You express care mostly through:", a: ["Words", "Actions", "Presence"] },
+  { type: "mcq", q: "Silence with someone you like feels:", a: ["Comfortable", "Awkward", "Heavy"] },
+  { type: "mcq", q: "Emotional honesty is important even if it:", a: ["Creates discomfort", "Causes conflict", "Changes nothing"] },
 
-  // Curiosity & Boredom
-  { q: "Repetition feels:", a: ["soothing", "draining"] },
-  { q: "You seek novelty in:", a: ["ideas", "experiences"] },
-  { q: "Free time is best spent:", a: ["exploring", "refining"] },
-  { q: "You fear boredom more than:", a: ["failure", "uncertainty"] },
-  { q: "You abandon projects mostly due to:", a: ["loss of interest", "external limits"] },
+  // D. Values
+  { type: "mcq", q: "Are you religious?", a: ["Yes", "Somewhat", "No"] },
+  { type: "mcq", q: "Do you want to date someone from the same religion?", a: ["Yes", "No", "Not important"] },
+  { type: "mcq", q: "Shared core values are:", a: ["Essential", "Important", "Flexible"] },
+  { type: "mcq", q: "On disagreement, what matters more?", a: ["Being understood", "Finding a solution"] },
+  { type: "mcq", q: "Loyalty matters most when it is:", a: ["Tested", "Consistent", "Quiet"] },
 
-  // Ethics & Values
-  { q: "Fairness means:", a: ["equal rules", "contextual judgment"] },
-  { q: "Truth should be:", a: ["gentle", "exact"] },
-  { q: "Promises are:", a: ["binding", "situational"] },
-  { q: "Rules exist to be:", a: ["followed", "questioned"] },
-  { q: "Loyalty matters most when:", a: ["tested", "unnoticed"] },
+  // E. Boundaries & deal-breakers
+  { type: "text", q: "One non-negotiable you have in a partner:" },
+  { type: "text", q: "One thing you can adapt on over time:" },
+  { type: "mcq", q: "How do you feel about long-term commitment?", a: ["Actively want it", "Open to it", "Unsure"] },
+  { type: "mcq", q: "People fundamentally:", a: ["Change", "Stay mostly the same"] },
+  { type: "mcq", q: "Independence in a relationship feels:", a: ["Essential", "Balanced", "Secondary"] },
 
-  // Conflict Philosophy
-  { q: "Arguments are:", a: ["necessary", "avoidable"] },
-  { q: "You respect people who are:", a: ["direct", "considerate"] },
-  { q: "Anger is best:", a: ["expressed", "contained"] },
-  { q: "You forgive:", a: ["slowly", "quickly"] },
-  { q: "Winning matters less than:", a: ["understanding", "resolution"] },
+  // F. Growth & meaning
+  { type: "mcq", q: "You are motivated more by:", a: ["Curiosity", "Stability", "Purpose"] },
+  { type: "mcq", q: "You feel fulfilled when you are:", a: ["Learning", "Creating", "Helping", "Building"] },
+  { type: "mcq", q: "A relationship should feel like:", a: ["A partnership", "A refuge", "A journey"] },
+  { type: "mcq", q: "Do you believe attraction can grow with time?", a: ["Yes", "Maybe", "No"] },
+  { type: "mcq", q: "You fear more:", a: ["Ending up alone", "Ending up misunderstood"] },
 
-  // Time Orientation
-  { q: "You think more about:", a: ["past", "future"] },
-  { q: "Planning feels:", a: ["freeing", "limiting"] },
-  { q: "Life feels more like:", a: ["a project", "a process"] },
-  { q: "You fear regret from:", a: ["action", "inaction"] },
-  { q: "Routines should be:", a: ["stable", "flexible"] },
-
-  // Social & Intimacy Signals
-  { q: "You bond through:", a: ["conversation", "shared activity"] },
-  { q: "Attention feels:", a: ["neutral", "heavy"] },
-  { q: "You share personal thoughts:", a: ["selectively", "freely"] },
-  { q: "Vulnerability feels:", a: ["strength", "exposure"] },
-  { q: "You feel closest when someone:", a: ["understands you", "chooses you"] },
-
-  // Meta / Consistency Checks
-  { q: "One word:", a: ["predictable", "unfinished"] },
-  { q: "One word:", a: ["intense", "steady"] },
-  { q: "You dislike being:", a: ["misunderstood", "constrained"] },
-  { q: "You trust intuition:", a: ["often", "cautiously"] },
-  { q: "Change should be:", a: ["intentional", "organic"] },
-
-  // Willingness Filter (crucial)
-  { q: "I am open to trusting an algorithm over instinct:", a: ["yes", "no"] },
-  { q: "I accept that attraction may grow slowly:", a: ["yes", "no"] },
-  { q: "I prefer accuracy over choice:", a: ["yes", "no"] },
-  { q: "I am willing to know one person deeply:", a: ["yes", "no"] },
-  { q: "Mismatch is not personal failure:", a: ["yes", "no"] }
+  // G. What matters
+  { type: "text", q: "One thing a potential partner must know about you early:" },
+  { type: "text", q: "One thing you would want to know early about them:" },
+  { type: "text", q: "What makes you feel genuinely seen?" },
+  { type: "text", q: "What drains you emotionally over time?" },
+  { type: "mcq", q: "Are you willing to let an algorithm prioritize compatibility over instant spark?", a: ["Yes", "Maybe", "No"] }
 ];
 
 let index = 0;
 let responses = [];
 
-function load() {
-  document.getElementById("question").innerText = questions[index].q;
-  document.querySelectorAll("button")[0].innerText = questions[index].a[0];
-  document.querySelectorAll("button")[1].innerText = questions[index].a[1];
+function renderQuestion() {
+  const q = questions[index];
+  document.getElementById("question").innerText = q.q;
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  if (q.type === "mcq") {
+    q.a.forEach(option => {
+      const btn = document.createElement("button");
+      btn.className = "option";
+      btn.innerText = option;
+      btn.onclick = () => submit(option);
+      optionsDiv.appendChild(btn);
+    });
+  }
+
+  if (q.type === "text") {
+    const input = document.createElement("textarea");
+    input.rows = 3;
+    optionsDiv.appendChild(input);
+
+    const btn = document.createElement("button");
+    btn.innerText = "Next";
+    btn.onclick = () => submit(input.value);
+    optionsDiv.appendChild(btn);
+  }
 }
 
-function answer(choice) {
-  responses.push(choice);
+function submit(answer) {
+  responses.push({ question: questions[index].q, answer });
   index++;
-  if (index < questions.length) load();
-  else {
-    document.body.innerHTML = "<h2>Responses saved.</h2><p>Matching will occur later.</p>";
+
+  if (index < questions.length) {
+    renderQuestion();
+  } else {
+    document.body.innerHTML = "<h2>Thank you.</h2><p>Your responses have been recorded.</p>";
     console.log(responses);
   }
 }
 
-load();
+renderQuestion();
 </script>
 
 </body>
