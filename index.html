@@ -61,7 +61,9 @@ const questions = [
 ];
 
 // ---------------- STATE ----------------
+// ---------------- STATE ----------------
 let i = 0;
+let responses = [];
 let traits = { closeness:0, conflict:0, depth:0, values:0, patience:0 };
 let userProfile = null;
 
@@ -79,18 +81,38 @@ function render() {
   const box = document.getElementById("options");
   box.innerHTML = "";
 
-  q.a.forEach(opt => {
-    const b = document.createElement("button");
-    b.innerText = opt;
-    b.onclick = () => {
-      traits[q.tag] += score(opt);
+  // MCQ questions
+  if (q.t === "mcq") {
+    q.a.forEach(opt => {
+      const b = document.createElement("button");
+      b.innerText = opt;
+      b.onclick = () => {
+        if (q.tag) traits[q.tag] += score(opt);
+        responses.push({ question: q.q, answer: opt });
+        i++;
+        i < questions.length ? render() : showAnalysis();
+      };
+      box.appendChild(b);
+    });
+  }
+
+  // TEXT questions
+  if (q.t === "text") {
+    const textarea = document.createElement("textarea");
+    textarea.rows = 3;
+    textarea.placeholder = "Type your answer here…";
+    box.appendChild(textarea);
+
+    const nextBtn = document.createElement("button");
+    nextBtn.innerText = "Next";
+    nextBtn.onclick = () => {
+      responses.push({ question: q.q, answer: textarea.value.trim() });
       i++;
       i < questions.length ? render() : showAnalysis();
     };
-    box.appendChild(b);
-  });
+    box.appendChild(nextBtn);
+  }
 }
-
 // ---------------- ANALYSIS ----------------
 function showAnalysis() {
   userProfile = { ...traits };
