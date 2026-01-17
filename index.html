@@ -21,12 +21,43 @@ textarea { width:100%; padding:10px; margin-top:10px; }
 <script>
 // ---------------- QUESTIONS ----------------
 const questions = [
+
+  // --- Identity & Taste (contextual) ---
+  { t:"text", q:"List up to 5 favourite movies (comma separated):" },
+  { t:"text", q:"List up to 5 favourite series (comma separated):" },
+  { t:"mcq", q:"What matters more to you in stories?", a:["Characters","Plot","Ideas","Emotion"], tag:"depth" },
+  { t:"mcq", q:"Music you return to most often:", a:["Lyrics","Melody","Mood","Energy"] },
+
+  // --- Daily life ---
+  { t:"mcq", q:"Your ideal weekend looks like:", a:["Quiet & slow","Planned & active","Mixed"], tag:"energy" },
   { t:"mcq", q:"You recharge best by:", a:["Being alone","With one person","In a group"], tag:"closeness" },
+  { t:"mcq", q:"You prefer conversations that are:", a:["Deep","Light","Situational"], tag:"depth" },
+
+  // --- Emotional & relational style ---
   { t:"mcq", q:"During conflict, you usually:", a:["Withdraw","Need time then talk","Engage immediately"], tag:"conflict" },
-  { t:"mcq", q:"You prefer conversations that are:", a:["Deep","Situational","Light"], tag:"depth" },
+  { t:"mcq", q:"When upset, you want your partner to:", a:["Give space","Check in","Act normally"], tag:"needs" },
+  { t:"mcq", q:"You express care mostly through:", a:["Words","Actions","Presence"] },
+  { t:"mcq", q:"Silence with someone you like feels:", a:["Comfortable","Awkward","Heavy"], tag:"closeness" },
+
+  // --- Values & beliefs ---
+  { t:"mcq", q:"Are you religious?", a:["Yes","Somewhat","No"], tag:"values" },
+  { t:"mcq", q:"Do you want to date someone from the same religion?", a:["Yes","No","Not important"], tag:"values" },
+  { t:"mcq", q:"Shared core values are:", a:["Essential","Important","Flexible"], tag:"values" },
+
+  // --- Commitment & independence ---
+  { t:"mcq", q:"How do you feel about long-term commitment?", a:["Actively want it","Open to it","Unsure"], tag:"commitment" },
   { t:"mcq", q:"Independence in a relationship feels:", a:["Essential","Balanced","Secondary"], tag:"closeness" },
-  { t:"mcq", q:"Shared values are:", a:["Essential","Important","Flexible"], tag:"values" },
-  { t:"mcq", q:"You believe attraction can grow with time:", a:["Yes","Maybe","No"], tag:"patience" }
+  { t:"mcq", q:"Do you believe attraction can grow with time?", a:["Yes","Maybe","No"], tag:"patience" },
+
+  // --- Boundaries & self-knowledge ---
+  { t:"text", q:"One non-negotiable you have in a partner:" },
+  { t:"text", q:"One thing you can adapt on over time:" },
+  { t:"text", q:"One thing a potential partner must know about you early:" },
+  { t:"text", q:"What drains you emotionally over time?" },
+
+  // --- Meta consent ---
+  { t:"mcq", q:"Are you willing to let an algorithm prioritise compatibility over instant spark?", a:["Yes","Maybe","No"], tag:"trust" }
+
 ];
 
 // ---------------- STATE ----------------
